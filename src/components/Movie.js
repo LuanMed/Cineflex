@@ -1,33 +1,26 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from "styled-components";
-
 export default function Movie() {
+    const URL = "https://mock-api.driven.com.br/api/v8/cineflex/movies"
+    const [movies, setMovies] = useState([]);
+
+    useEffect(() => {
+        const promise = axios.get(URL);
+        promise.then(res => setMovies(res.data));
+        promise.catch(err => alert(err.response.data.message));
+    }, [])
 
     return (
         <>
-            <ContainerMovie>
-                <img src="https://image.tmdb.org/t/p/w500/7D430eqZj8y3oVkLFfsWXGRcpEG.jpg" alt="poster do filme" />
-            </ContainerMovie>
-            <ContainerMovie>
-                <img src="https://image.tmdb.org/t/p/w500/7D430eqZj8y3oVkLFfsWXGRcpEG.jpg" alt="poster do filme" />
-            </ContainerMovie>
-            <ContainerMovie>
-                <img src="https://image.tmdb.org/t/p/w500/7D430eqZj8y3oVkLFfsWXGRcpEG.jpg" alt="poster do filme" />
-            </ContainerMovie>
-            <ContainerMovie>
-                <img src="https://image.tmdb.org/t/p/w500/7D430eqZj8y3oVkLFfsWXGRcpEG.jpg" alt="poster do filme" />
-            </ContainerMovie>
-            <ContainerMovie>
-                <img src="https://image.tmdb.org/t/p/w500/7D430eqZj8y3oVkLFfsWXGRcpEG.jpg" alt="poster do filme" />
-            </ContainerMovie>
-            <ContainerMovie>
-                <img src="https://image.tmdb.org/t/p/w500/7D430eqZj8y3oVkLFfsWXGRcpEG.jpg" alt="poster do filme" />
-            </ContainerMovie>
-            <ContainerMovie>
-                <img src="https://image.tmdb.org/t/p/w500/7D430eqZj8y3oVkLFfsWXGRcpEG.jpg" alt="poster do filme" />
-            </ContainerMovie>
-            <ContainerMovie>
-                <img src="https://image.tmdb.org/t/p/w500/7D430eqZj8y3oVkLFfsWXGRcpEG.jpg" alt="poster do filme" />
-            </ContainerMovie>
+            {movies.map((movie) =>
+                <Link key={movie.id} to={`/sessoes/${movie.id}`}>
+                    <ContainerMovie>
+                        <img src={movie.posterURL} alt="poster do filme" />
+                    </ContainerMovie>
+                </Link>
+            )}
         </>
     )
 

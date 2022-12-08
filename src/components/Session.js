@@ -1,12 +1,17 @@
 import styled from "styled-components"
 
-export default function Session(){
+export default function Session({sessions}) {
+    const URL = "https://mock-api.driven.com.br/api/v8/cineflex/movies/1/showtimes";
+
     return (
-        <ContainerSession>
-            <p>Quinta-feira - 24/06/2021</p>
-            <button>15:00</button>
-            <button>19:00</button>
-        </ContainerSession>
+        <>
+            {sessions.map(s =>
+                <ContainerSession key={s.date}>
+                    <p>{s.weekday} - {s.date}</p>
+                    {s.showtimes.map(showtime => <button key={showtime.name}>{showtime.name}</button>)}
+                </ContainerSession>
+            )}
+        </>
     )
 }
 

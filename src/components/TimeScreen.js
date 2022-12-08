@@ -1,23 +1,35 @@
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Session from "./Session";
 
 export default function TimeScreen() {
+    const { idFilme } = useParams();
+    const [sessions, setSessions] = useState(undefined);
+
+    useEffect(() => {
+        const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`);
+        promise.then(res => setSessions(res.data));
+        promise.catch(err => alert(err.response.data.message));
+    }, [])
+
+    if (sessions === undefined) {
+        return <div>Carregando...</div>
+    }
+
     return (
         <div>
             <Header>Selecione o horário</Header>
             <SessionContainer>
-                <Session />
-                <Session />
-                <Session />
-                <Session />
-                <Session />
+                <Session sessions={sessions.days}/>
             </SessionContainer>
             <Footer>
                 <ContainerMovie>
-                    <img src="https://image.tmdb.org/t/p/w500/7D430eqZj8y3oVkLFfsWXGRcpEG.jpg" alt="poster do filme" />
+                    <img src={sessions.posterURL} alt="poster do filme" />
                 </ContainerMovie>
                 <div>
-                    <p>2067</p>
+                    <p>{sessions.title}</p>
                 </div>
             </Footer>
         </div>

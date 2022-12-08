@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import styled from "styled-components";
 import Movie from "./Movie";
 
 export default function MovieScreen() {
+
     return (
         <ContainerMovieScreen>
             <Header>Selecione o filme</Header>
@@ -15,14 +17,6 @@ export default function MovieScreen() {
 const ContainerMovieScreen = styled.div`
 `
 
-const ContainerMovies = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px
-
-`
-
 const Header = styled.header`
     width: 100vw;
     height: 110px;
@@ -30,4 +24,10 @@ const Header = styled.header`
     line-height: 110px;
     text-align: center;
     color: #293845;
+`
+const ContainerMovies = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px
 `
