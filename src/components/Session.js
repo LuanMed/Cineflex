@@ -1,14 +1,17 @@
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-export default function Session({sessions}) {
-    const URL = "https://mock-api.driven.com.br/api/v8/cineflex/movies/1/showtimes";
-
+export default function Session({ sessions }) {
     return (
         <>
             {sessions.map(s =>
                 <ContainerSession key={s.date}>
                     <p>{s.weekday} - {s.date}</p>
-                    {s.showtimes.map(showtime => <button key={showtime.name}>{showtime.name}</button>)}
+                    {s.showtimes.map(showtime =>
+                        <Link key={showtime.name} to={`/assentos/${showtime.id}`}>
+                            <button>{showtime.name}</button>
+                        </Link>
+                    )}
                 </ContainerSession>
             )}
         </>
@@ -32,5 +35,6 @@ const ContainerSession = styled.li`
         border: #E8833A;
         border-radius: 3px;
         margin-right: 8px;
+        cursor:pointer;
     }
 `

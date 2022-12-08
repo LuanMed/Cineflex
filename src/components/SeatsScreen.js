@@ -1,60 +1,29 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 export default function SeatsScreen() {
+    const { idSessao } = useParams();
+    const [session, setSession] = useState(undefined);
+
+    useEffect(() => {
+        const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`);
+        promise.then(res => setSession(res.data));
+        promise.catch(err => alert(err.response.data.message));
+    }, [])
+
+    if (session === undefined) {
+        return <div>Carregando...</div>
+    }
+
     return (
         <>
             <Header>Selecione o(s) assento(s)</Header>
             <SeatsButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>10</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>20</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>20</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>20</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>01</SeatButton>
-                <SeatButton>20</SeatButton>
+                {session.seats.map(seat =>
+                    <SeatButton key={seat.id}>{seat.name}</SeatButton>
+                )}
             </SeatsButton>
             <Captions>
                 <Caption><SelectedButton></SelectedButton><p>Selecionado</p></Caption>
@@ -68,11 +37,11 @@ export default function SeatsScreen() {
             <ReserveButton>Reservar assento(s)</ReserveButton>
             <Footer>
                 <ContainerMovie>
-                    <img src="https://image.tmdb.org/t/p/w500/7D430eqZj8y3oVkLFfsWXGRcpEG.jpg" alt="poster do filme" />
+                    <img src={session.movie.posterURL} alt="poster do filme" />
                 </ContainerMovie>
                 <div>
-                    <p>2067</p>
-                    <p>Quinta-feira - 15:00</p>
+                    <p>{session.movie.title}</p>
+                    <p>{session.day.weekday} - {session.name}</p>
                 </div>
             </Footer>
         </>
@@ -188,7 +157,7 @@ const Footer = styled.footer`
     width: 100vw;
     height: 117px;
     p{
-        font-size: 26px;
+        font-size: 22px;
         color: #293845;
         margin-left: 14px;
     }
