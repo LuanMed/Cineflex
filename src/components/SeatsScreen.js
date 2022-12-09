@@ -75,6 +75,7 @@ export default function SeatsScreen() {
                         value={name}
                         onChange={event => setName(event.target.value)}
                         required
+                        data-test="client-name"
                     />
                     <label htmlFor="cpf">CPF do comprador:</label>
                     <input
@@ -83,11 +84,12 @@ export default function SeatsScreen() {
                         value={cpf}
                         onChange={event => setCpf(event.target.value)}
                         required
+                        data-test="client-cpf"
                     />
                 </ContainerRegistration>
-                <ReserveButton>Reservar assento(s)</ReserveButton>
+                <ReserveButton data-test="book-seat-btn">Reservar assento(s)</ReserveButton>
             </form>
-            <Footer>
+            <Footer data-test="footer">
                 <ContainerMovie>
                     <img src={session.movie.posterURL} alt="poster do filme" />
                 </ContainerMovie>

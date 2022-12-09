@@ -4,21 +4,27 @@ import { Link, useLocation } from "react-router-dom";
 export default function FinalScreen() {
     const location = useLocation();
     const { cpf, date, hour, ids, name, title } = location.state;
-    
+
     return (
         <>
             <Header>Pedido feito <br /> com sucesso!</Header>
             <Info>
-                <h1>Filme e sessão:</h1>
-                <p>{title}<br />{date} {hour}</p>
-                <h1>Ingressos:</h1>
-                {ids.map(seat => <p key={seat}>Assento {seat}</p>)}
-                <h1>Comprador:</h1>
-                <p>Nome: {name}</p>
-                <p>CPF: {cpf}</p>
+                <div data-test="movie-info">
+                    <h1>Filme e sessão:</h1>
+                    <p>{title}<br />{date} {hour}</p>
+                </div>
+                <div data-test="seats-info">
+                    <h1>Ingressos:</h1>
+                    {ids.map(seat => <p key={seat}>Assento {seat}</p>)}
+                </div>
+                <div data-test="client-info">
+                    <h1>Comprador:</h1>
+                    <p>Nome: {name}</p>
+                    <p>CPF: {cpf}</p>
+                </div>
             </Info>
             <Link to={"/"}>
-                <ReserveButton>Voltar pra Home</ReserveButton>
+                <ReserveButton data-test="go-home-btn">Voltar pra Home</ReserveButton>
             </Link>
         </>
     )

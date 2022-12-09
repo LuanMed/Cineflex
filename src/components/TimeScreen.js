@@ -24,7 +24,7 @@ export default function TimeScreen() {
             <SessionContainer>
                 <Session sessions={sessions.days}/>
             </SessionContainer>
-            <Footer>
+            <Footer data-test="footer">
                 <ContainerMovie>
                     <img src={sessions.posterURL} alt="poster do filme" />
                 </ContainerMovie>

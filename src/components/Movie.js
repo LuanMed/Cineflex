@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
+
 export default function Movie() {
     const URL = "https://mock-api.driven.com.br/api/v8/cineflex/movies"
     const [movies, setMovies] = useState(undefined);
@@ -20,7 +21,7 @@ export default function Movie() {
         <>
             {movies.map((movie) =>
                 <Link key={movie.id} to={`/sessoes/${movie.id}`}>
-                    <ContainerMovie>
+                    <ContainerMovie data-test="movie">
                         <img src={movie.posterURL} alt="poster do filme" />
                     </ContainerMovie>
                 </Link>

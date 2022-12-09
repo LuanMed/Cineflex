@@ -35,6 +35,7 @@ export default function EachSeat({ seat, chosenSeats, setChosenSeats, chosenSeat
             borderColor={borderColor}
             isAvailable={seat.isAvailable}
             onClick={() => selectButton(seat.name, seat.id)}
+            data-test="seat"
         >
             {seat.name}
         </SeatButton>

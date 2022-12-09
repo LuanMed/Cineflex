@@ -5,11 +5,11 @@ export default function Session({ sessions }) {
     return (
         <>
             {sessions.map(s =>
-                <ContainerSession key={s.date}>
+                <ContainerSession key={s.date} data-test="movie-day">
                     <p>{s.weekday} - {s.date}</p>
                     {s.showtimes.map(showtime =>
                         <Link key={showtime.name} to={`/assentos/${showtime.id}`}>
-                            <button>{showtime.name}</button>
+                            <button data-test="showtime">{showtime.name}</button>
                         </Link>
                     )}
                 </ContainerSession>
