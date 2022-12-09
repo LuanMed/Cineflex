@@ -4,13 +4,17 @@ import { Link } from 'react-router-dom';
 import styled from "styled-components";
 export default function Movie() {
     const URL = "https://mock-api.driven.com.br/api/v8/cineflex/movies"
-    const [movies, setMovies] = useState([]);
+    const [movies, setMovies] = useState(undefined);
 
     useEffect(() => {
         const promise = axios.get(URL);
         promise.then(res => setMovies(res.data));
         promise.catch(err => alert(err.response.data.message));
     }, [])
+
+    if (movies === undefined) {
+        return <div>Carregando...</div>
+    }
 
     return (
         <>

@@ -4,8 +4,10 @@ import FinalScreen from "./FinalScreen";
 import TimeScreen from "./TimeScreen";
 import MovieScreen from "./MovieScreen";
 import SeatsScreen from "./SeatsScreen";
+import { useState } from "react";
 
 export default function App() {
+  const [finalInfo, setFinalInfo] = useState({});
   return (
     <BrowserRouter>
       <ContainerApp>
@@ -15,11 +17,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<MovieScreen />} />
           <Route path="/sessoes/:idFilme" element={<TimeScreen />} />
-          <Route path="/assentos/:idSessao" element={<SeatsScreen />} />
-          <Route path="/sucesso" element={<FinalScreen />} />
-          {/* <TimeScreen /> */}
-          {/* <SeatsScreen /> */}
-          {/* <FinalScreen/>  */}
+          <Route path="/assentos/:idSessao" element={<SeatsScreen finalInfo={finalInfo} setFinalInfo={setFinalInfo}/>} />
+          <Route path="/sucesso" element={<FinalScreen finalInfo={finalInfo}/>} />
         </Routes>
       </ContainerApp>
     </BrowserRouter>

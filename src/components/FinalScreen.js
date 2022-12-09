@@ -1,20 +1,25 @@
-import styled from "styled-components"
+import styled from "styled-components";
+import { Link, useLocation } from "react-router-dom";
 
 export default function FinalScreen() {
+    const location = useLocation();
+    const { cpf, date, hour, ids, name, title } = location.state;
+    
     return (
         <>
             <Header>Pedido feito <br /> com sucesso!</Header>
             <Info>
                 <h1>Filme e sessão:</h1>
-                <p>Enola Holmes<br />24/06/2021 15:00</p>
+                <p>{title}<br />{date} {hour}</p>
                 <h1>Ingressos:</h1>
-                <p>Assento 15</p>
-                <p>Assento 16</p>
+                {ids.map(seat => <p key={seat}>Assento {seat}</p>)}
                 <h1>Comprador:</h1>
-                <p>Nome: João da Silva Sauro</p>
-                <p>CPF: 123.456.789-10</p>
+                <p>Nome: {name}</p>
+                <p>CPF: {cpf}</p>
             </Info>
-            <ReserveButton>Voltar pra Home</ReserveButton>
+            <Link to={"/"}>
+                <ReserveButton>Voltar pra Home</ReserveButton>
+            </Link>
         </>
     )
 }

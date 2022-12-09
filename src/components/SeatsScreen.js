@@ -1,11 +1,17 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import EachSeat from "./EachSeat";
 
 export default function SeatsScreen() {
     const { idSessao } = useParams();
     const [session, setSession] = useState(undefined);
+    const [name, setName] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [chosenSeats, setChosenSeats] = useState([]);
+    const [chosenSeatsId, setChosenSeatsId] = useState([]);
+    const navigate = useNavigate()
 
     useEffect(() => {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`);
@@ -17,12 +23,42 @@ export default function SeatsScreen() {
         return <div>Carregando...</div>
     }
 
+    function reserveSeats(e) {
+        e.preventDefault();
+        if (chosenSeatsId.length == 0) return alert("Selecione o(s) assento(s)");
+        const finalObj = { ids: chosenSeatsId, name: name, cpf: cpf };
+
+        const url_post = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many";
+        const promise = axios.post(url_post, finalObj);
+        promise.then(res => {
+            console.log(res.data);
+
+            navigate("/sucesso", {
+                state: {
+                    ids: chosenSeats,
+                    name: name, cpf: cpf,
+                    title: session.movie.title,
+                    hour: session.name,
+                    date: session.day.date,
+                },
+            });
+        })
+        promise.catch(err => alert(err.response.data.message));
+    }
+
     return (
         <>
             <Header>Selecione o(s) assento(s)</Header>
             <SeatsButton>
                 {session.seats.map(seat =>
-                    <SeatButton key={seat.id}>{seat.name}</SeatButton>
+                    <EachSeat
+                        key={seat.id}
+                        seat={seat}
+                        chosenSeats={chosenSeats}
+                        setChosenSeats={setChosenSeats}
+                        chosenSeatsId={chosenSeatsId}
+                        setChosenSeatsId={setChosenSeatsId}
+                    />
                 )}
             </SeatsButton>
             <Captions>
@@ -30,11 +66,27 @@ export default function SeatsScreen() {
                 <Caption><AvailableButton></AvailableButton><p>Disponível</p></Caption>
                 <Caption><UnavailableButton></UnavailableButton><p>Indisponível</p></Caption>
             </Captions>
-            <ContainerRegistration>
-                <p>Nome do comprador:</p><input placeholder="Digite seu nome..."></input>
-                <p>CPF do comprador::</p><input placeholder="Digite seu CPF..."></input>
-            </ContainerRegistration>
-            <ReserveButton>Reservar assento(s)</ReserveButton>
+            <form onSubmit={reserveSeats}>
+                <ContainerRegistration>
+                    <label htmlFor="name">Nome do comprador:</label>
+                    <input
+                        id="name"
+                        placeholder="Digite seu nome..."
+                        value={name}
+                        onChange={event => setName(event.target.value)}
+                        required
+                    />
+                    <label htmlFor="cpf">CPF do comprador:</label>
+                    <input
+                        id="cpf"
+                        placeholder="Digite seu CPF..."
+                        value={cpf}
+                        onChange={event => setCpf(event.target.value)}
+                        required
+                    />
+                </ContainerRegistration>
+                <ReserveButton>Reservar assento(s)</ReserveButton>
+            </form>
             <Footer>
                 <ContainerMovie>
                     <img src={session.movie.posterURL} alt="poster do filme" />
@@ -60,19 +112,6 @@ const SeatsButton = styled.div`
     display: flex;
     flex-wrap: wrap;
     max-width: 320px;
-    button{
-        width: 26px;
-        height: 26px;
-        font-size: 11px;
-        background-color: #C3CFD9;
-        border: 1px solid #808F9D;
-        border-radius: 12px;
-        margin: 0 3px 18px 3px;
-        cursor: pointer;
-    }
-`
-const SeatButton = styled.button`
-    
 `
 
 const Captions = styled.div`
@@ -113,7 +152,7 @@ const ContainerRegistration = styled.div`
     flex-direction: column;
     width: 320px;
     margin-top: 45px;
-    p{
+    label{
         font-size: 18px;
         color: #293845;
         margin-bottom: 1px;
@@ -143,8 +182,7 @@ const ReserveButton = styled.button`
     background-color: #E8833A;
     border: #E8833A;
     border-radius: 3px;
-    margin-top: 40px;
-    margin-bottom: 125px;
+    margin: 30px 0 125px 47px;
     cursor: pointer;
 `
 
