@@ -3,10 +3,13 @@ import { Link, useLocation } from "react-router-dom";
 
 export default function FinalScreen() {
     const location = useLocation();
-    const { cpf, date, hour, ids, name, title } = location.state;
+    const { cpf, date, hour, ids, name, title, session } = location.state;
 
     return (
         <>
+            <Link to={`/assentos/${session}`}>
+                <BackButton data-test="go-home-header-btn">Voltar</BackButton>
+            </Link>
             <Header>Pedido feito <br /> com sucesso!</Header>
             <Info>
                 <div data-test="movie-info">
@@ -29,6 +32,21 @@ export default function FinalScreen() {
         </>
     )
 }
+
+const BackButton = styled.button`
+    position: fixed;
+    top: 25px;
+    left: 10px;
+    width: 45px;
+    height: 18px;
+    font-size: 12px;
+    color: #E8833A;
+    background-color: #E5E5E5;
+    border: #E8833A;
+    border-radius: 3px;
+    margin-right: 8px;
+    cursor:pointer;
+`
 
 const Header = styled.header`
     width: 100vw;

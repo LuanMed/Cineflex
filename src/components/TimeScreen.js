@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Link } from "react-router-dom"
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
@@ -20,6 +21,9 @@ export default function TimeScreen() {
 
     return (
         <div>
+            <Link to={`/`}>
+                <BackButton data-test="go-home-header-btn">Voltar</BackButton>
+            </Link>
             <Header>Selecione o horário</Header>
             <SessionContainer>
                 <Session sessions={sessions.days}/>
@@ -35,6 +39,21 @@ export default function TimeScreen() {
         </div>
     )
 }
+
+const BackButton = styled.button`
+    position: fixed;
+    top: 25px;
+    left: 10px;
+    width: 45px;
+    height: 18px;
+    font-size: 12px;
+    color: #E8833A;
+    background-color: #E5E5E5;
+    border: #E8833A;
+    border-radius: 3px;
+    margin-right: 8px;
+    cursor:pointer;
+`
 
 const Header = styled.header`
     width: 100vw;

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -40,6 +41,7 @@ export default function SeatsScreen() {
                     title: session.movie.title,
                     hour: session.name,
                     date: session.day.date,
+                    session: session.id
                 },
             });
         })
@@ -48,6 +50,9 @@ export default function SeatsScreen() {
 
     return (
         <>
+            <Link to={`/sessoes/${session.movie.id}`}>
+                <BackButton data-test="go-home-header-btn">Voltar</BackButton>
+            </Link>
             <Header>Selecione o(s) assento(s)</Header>
             <SeatsButton>
                 {session.seats.map(seat =>
@@ -101,6 +106,21 @@ export default function SeatsScreen() {
         </>
     )
 }
+
+const BackButton = styled.button`
+    position: fixed;
+    top: 25px;
+    left: 10px;
+    width: 45px;
+    height: 18px;
+    font-size: 12px;
+    color: #E8833A;
+    background-color: #E5E5E5;
+    border: #E8833A;
+    border-radius: 3px;
+    margin-right: 8px;
+    cursor:pointer;
+`
 
 const Header = styled.header`
     width: 100vw;
