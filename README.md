@@ -1,4 +1,4 @@
-# <p align = "center"> Projeto Instagram React</p>
+# <p align = "center"> Project Cineflex</p>
 
 <p align = "center"> <img src="./src/assets/fisrt-page.png" /><img src="./src/assets/second-page.png" /></br><img src="./src/assets/third-page.png" /><img src="./src/assets/fourth-page.png" /></p>
 
@@ -14,6 +14,7 @@
 - [HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
 - [CSS](https://www.w3schools.com/css/)
 - [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
+- [Styled Components](https://styled-components.com/)
 - [React](https://reactjs.org/)
 - [React Router](https://reactrouter.com/)
 
