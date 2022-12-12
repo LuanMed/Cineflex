@@ -12,7 +12,6 @@
 ##  <p align = "left"> :white_circle: Tecnologias</p>
 
 - [HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
-- [CSS](https://www.w3schools.com/css/)
 - [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
 - [Styled Components](https://styled-components.com/)
 - [React](https://reactjs.org/)
