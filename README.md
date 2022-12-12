@@ -1,6 +1,6 @@
 # <p align = "center"> Projeto Instagram React</p>
 
-<p align = "center"> <img src="./src/assets/fisrt-page.png" /><img src="./src/assets/second-page.png" /><img src="./src/assets/third-page.png" /><img src="./src/assets/fourth-page.png" /></p>
+<p align = "center"> <img src="./src/assets/fisrt-page.png" /><img src="./src/assets/second-page.png" /></br><img src="./src/assets/third-page.png" /><img src="./src/assets/fourth-page.png" /></p>
 
 </br>
 
